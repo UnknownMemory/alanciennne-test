@@ -1,8 +1,6 @@
 from itertools import product
 from django.db import models
 
-from product.models import Product
-
 
 class Cart(models.Model):
     checked_out = models.BooleanField(default=False)
@@ -10,6 +8,10 @@ class Cart(models.Model):
     def total_cart(self):
         items = Item.objects.filter(cart_id=self.id)
         return sum(item.total_price() for item in items)
+
+    def total_items(self):
+        items = Item.objects.filter(cart_id=self.id)
+        return sum(item.quantity for item in items)
 
 
 class Item(models.Model):

@@ -16,3 +16,6 @@ class Product(models.Model):
     def price_ttc(self):
         ttc = (self.tva / 100) * self.price_ht + self.price_ht
         return round(ttc, 2)
+
+    def customer_stock(self):
+        return self.stock_available - self.stock_ordered

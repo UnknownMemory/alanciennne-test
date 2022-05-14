@@ -4,6 +4,8 @@ import { useCookies } from "react-cookie";
 
 import Catalog from "./components/catalog/catalog";
 import Header from "./components/header/header";
+import Cart from "./components/cart/cart";
+
 import CartContext from "./contexts/CartContext";
 import useFetch from "./hooks/useFetch";
 
@@ -12,6 +14,7 @@ import "./App.scss";
 const App = () => {
   const { get, post, status } = useFetch();
   const [cart, setCart] = useState(null);
+  const [cartItems, setCartItems] = useState(null);
   const [cookies, setCookie] = useCookies();
 
   const createCart = async () => {
@@ -26,10 +29,19 @@ const App = () => {
     const res = await get(
       `http://127.0.0.1:8000/api/v1/cart/get/${cookies.cart_id}/`
     );
-    if (!cookies.cart_id) {
+    if (!cookies.cart_id || cookies.cart_id == undefined) {
       createCart();
     } else {
       setCart(res);
+    }
+  };
+
+  const getCartItems = async () => {
+    const res = await get(
+      `http://127.0.0.1:8000/api/v1/cart/${cookies.cart_id}/items/`
+    );
+    if (status.current.ok) {
+      setCartItems(res);
     }
   };
 
@@ -40,9 +52,18 @@ const App = () => {
   return (
     <Fragment>
       <Header />
-      <CartContext.Provider value={{ cart: cart, getCart: getCart }}>
+      <CartContext.Provider
+        value={{
+          cart: cart,
+          getCart: getCart,
+          createCart: createCart,
+          cartItems: cartItems,
+          getCartItems: getCartItems,
+        }}
+      >
         <Routes>
           <Route path="/" element={<Catalog />} />
+          <Route path="cart/" element={<Cart />} />
         </Routes>
       </CartContext.Provider>
     </Fragment>

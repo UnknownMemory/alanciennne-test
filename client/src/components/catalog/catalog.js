@@ -21,7 +21,7 @@ const Catalog = () => {
         product_id={p.id}
         name={p.product_name}
         price={p.price_ttc}
-        max_quantity={p.stock_available}
+        max_quantity={p.customer_stock}
       />
     );
   });
@@ -32,10 +32,8 @@ const Catalog = () => {
 
   return (
     <Container className="h-100">
-      <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h4 className="text-2xl font-extrabold tracking-tight text-gray-900">
-          Produits
-        </h4>
+      <div>
+        <h1>Produits</h1>
 
         <ListGroup variant="flush">{product}</ListGroup>
       </div>

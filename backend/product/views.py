@@ -7,3 +7,13 @@ from .serializers import ProductSerializer
 class GetProducts(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+class GetProduct(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+class UpdateProduct(generics.UpdateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
