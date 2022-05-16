@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Button, ListGroupItem, FormControl } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { ListGroupItem, FormControl } from "react-bootstrap";
 
-import CartContext from "../../contexts/CartContext";
 import useFetch from "../../hooks/useFetch";
 
 const Item = (props) => {
@@ -36,10 +35,11 @@ const Item = (props) => {
 
   return (
     <ListGroupItem className="d-flex align-items-center justify-content-between">
-      <span>{product?.product_name}</span>
-      <span>{props.price}€</span>
-      <div className="d-flex align-items-center">
+      <span className="col">{product?.product_name}</span>
+      <span className="col text-center">{props.price}€</span>
+      <div className="col d-flex justify-content-end">
         <FormControl
+          className="w-auto"
           type="number"
           defaultValue={props.quantity}
           min="1"

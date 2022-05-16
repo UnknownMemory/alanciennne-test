@@ -54,17 +54,20 @@ const Cart = () => {
     if (status.current?.ok) {
       removeCookie("cart_id");
       cart.createCart();
+      cart.setCartItems(null);
       navigate("/", { replace: true });
     }
   };
 
   useEffect(() => {
-    cart.getCartItems();
     cart.getCart();
   }, []);
   return (
     <Container className="h-100">
-      <h1>Panier</h1>
+      <div className="text-center my-5">
+        <h1>Panier</h1>
+      </div>
+
       <ListGroup variant="flush">
         <ListGroupItem className="d-flex align-items-center justify-content-between">
           <span>Produits</span>
@@ -73,17 +76,16 @@ const Cart = () => {
         </ListGroupItem>
         {items}
         <ListGroupItem className="d-flex align-items-center justify-content-between">
-          <span>Total </span>
-          <span>{cart.cart?.total_cart}€</span>
-          <span>{cart.cart?.total_items}</span>
+          <span className="col">Total </span>
+          <span className="col text-center">{cart.cart?.total_cart}€</span>
+          <span className="col text-end">{cart.cart?.total_items}</span>
         </ListGroupItem>
       </ListGroup>
 
       <Button
-        onClick={() => {
-          cart.cart?.total_items > 0 && checkedOut();
-        }}
-        disabled={cart.cart?.total_items == 0}
+        className="mt-4"
+        onClick={cart.cart?.total_items > 0 ? checkedOut : null}
+        disabled={cart.cart?.total_items === 0}
       >
         Commander
       </Button>

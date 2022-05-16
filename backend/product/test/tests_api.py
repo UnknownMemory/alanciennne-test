@@ -17,3 +17,17 @@ class ProductAPITest(APITestCase):
         data = json.loads(response.content)
 
         self.assertEqual(len(data), 2)
+
+    def test_get_product(self):
+        url = reverse("get-product", args=[2])
+        response = self.client.get(url)
+        data = json.loads(response.content)
+
+        self.assertEqual(data["product_name"], "Carottes")
+
+    def test_update_product(self):
+        url = reverse("update-product", args=[1])
+        response = self.client.patch(url, data={"stock_ordered": 3})
+        data = json.loads(response.content)
+
+        self.assertEqual(data["customer_stock"], 5)

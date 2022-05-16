@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Container, Button } from "react-bootstrap";
-import Navbar from "react-bootstrap/Navbar";
+import { Container, Navbar } from "react-bootstrap";
+
+import CartContext from "../../contexts/CartContext";
 
 const Header = () => {
+  const cart = useContext(CartContext);
   return (
-    <Navbar bg="light">
+    <Navbar className="border-bottom">
       <Container>
         <Navbar.Brand>
           <Link to="/">Boutique</Link>
         </Navbar.Brand>
-        <Button variant="outline-dark">
+        <div>
           <Link to="/cart">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +29,8 @@ const Header = () => {
               />
             </svg>
           </Link>
-        </Button>
+          <span>{cart.cartItems ? cart.cartItems?.length : 0}</span>
+        </div>
       </Container>
     </Navbar>
   );

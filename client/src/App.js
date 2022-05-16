@@ -38,7 +38,9 @@ const App = () => {
 
   const getCartItems = async () => {
     const res = await get(
-      `http://127.0.0.1:8000/api/v1/cart/${cookies.cart_id}/items/`
+      `http://127.0.0.1:8000/api/v1/cart/${
+        cookies.cart_id === undefined ? cart.id : cookies.cart_id
+      }/items/`
     );
     if (status.current.ok) {
       setCartItems(res);
@@ -47,20 +49,22 @@ const App = () => {
 
   useEffect(() => {
     getCart();
+    getCartItems();
   }, []);
 
   return (
     <Fragment>
-      <Header />
       <CartContext.Provider
         value={{
           cart: cart,
           getCart: getCart,
           createCart: createCart,
           cartItems: cartItems,
+          setCartItems: setCartItems,
           getCartItems: getCartItems,
         }}
       >
+        <Header />
         <Routes>
           <Route path="/" element={<Catalog />} />
           <Route path="cart/" element={<Cart />} />

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, ListGroup } from "react-bootstrap";
+
 import useFetch from "../../hooks/useFetch";
 import Product from "../product/product";
 
@@ -32,11 +33,13 @@ const Catalog = () => {
 
   return (
     <Container className="h-100">
-      <div>
+      <div className="text-center my-5">
         <h1>Produits</h1>
-
-        <ListGroup variant="flush">{product}</ListGroup>
       </div>
+
+      <ListGroup variant="flush" as="ul">
+        {product}
+      </ListGroup>
     </Container>
   );
 };
